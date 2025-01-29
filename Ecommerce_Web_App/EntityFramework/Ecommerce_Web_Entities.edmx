@@ -4,13 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Ecommerce_Web_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Ecommerce_Web_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="PK_CategoryId" />
           </Key>
           <Property Name="PK_CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="MasterId" Type="int" />
           <Property Name="CategoryDetail" Type="nvarchar" MaxLength="255" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="IsDeleted" Type="bit" />
@@ -124,6 +125,30 @@
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="100" />
           <Property Name="UpdatedOn" Type="datetime" />
         </EntityType>
+        <Association Name="FK__Categorie__Maste__66603565">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="PK_CategoryId" />
+            </Principal>
+            <Dependent Role="Categories1">
+              <PropertyRef Name="MasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Categorie__Maste__6754599E">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="PK_CategoryId" />
+            </Principal>
+            <Dependent Role="Categories1">
+              <PropertyRef Name="MasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Order__FK_Status__5629CD9C">
           <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
@@ -148,7 +173,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__Updated__49C3F6B7">
+        <Association Name="FK__Product__FK_Cate__6D0D32F4">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -183,6 +208,14 @@
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Categorie__Maste__66603565" Association="Self.FK__Categorie__Maste__66603565">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Categories1" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Categorie__Maste__6754599E" Association="Self.FK__Categorie__Maste__6754599E">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Categories1" EntitySet="Categories" />
+          </AssociationSet>
           <AssociationSet Name="FK__Order__FK_Status__5629CD9C" Association="Self.FK__Order__FK_Status__5629CD9C">
             <End Role="Status" EntitySet="Status" />
             <End Role="Order" EntitySet="Order" />
@@ -191,31 +224,15 @@
             <End Role="PaymentMethod" EntitySet="PaymentMethod" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__Updated__49C3F6B7" Association="Self.FK__Product__Updated__49C3F6B7">
+          <AssociationSet Name="FK__Product__FK_Cate__6D0D32F4" Association="Self.FK__Product__FK_Cate__6D0D32F4">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Ecommerce_Web_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="PK_CategoryId" />
-          </Key>
-          <Property Name="PK_CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CategoryDetail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Products" Relationship="Self.FK__Product__Updated__49C3F6B7" FromRole="Categories" ToRole="Product" />
-        </EntityType>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="PK_OrderId" />
@@ -274,7 +291,7 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Category" Relationship="Self.FK__Product__Updated__49C3F6B7" FromRole="Product" ToRole="Categories" />
+          <NavigationProperty Name="Category" Relationship="Ecommerce_Web_DBModel.FK__Product__FK_Cate__6D0D32F4" FromRole="Product" ToRole="Category" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -326,18 +343,6 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
         </EntityType>
-        <Association Name="FK__Product__Updated__49C3F6B7">
-          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="PK_CategoryId" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="FK_CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Order__FK_Status__5629CD9C">
           <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
@@ -363,17 +368,12 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Ecommerce_Web_DBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="PaymentMethods" EntityType="Self.PaymentMethod" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK__Product__Updated__49C3F6B7" Association="Self.FK__Product__Updated__49C3F6B7">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
           <AssociationSet Name="FK__Order__FK_Status__5629CD9C" Association="Self.FK__Order__FK_Status__5629CD9C">
             <End Role="Status" EntitySet="Status" />
             <End Role="Order" EntitySet="Orders" />
@@ -397,6 +397,19 @@
             <Parameter Name="city" Mode="In" Type="String" />
             <Parameter Name="phone_no" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Categories" EntityType="Ecommerce_Web_DBModel.Category" />
+          <AssociationSet Name="FK__Categorie__Maste__66603565" Association="Ecommerce_Web_DBModel.FK__Categorie__Maste__66603565">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Category1" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Categorie__Maste__6754599E" Association="Ecommerce_Web_DBModel.FK__Categorie__Maste__6754599E">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Category1" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__FK_Cate__6D0D32F4" Association="Ecommerce_Web_DBModel.FK__Product__FK_Cate__6D0D32F4">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="SP_Login_Result">
           <Property Type="Int32" Name="PK_UserId" Nullable="false" />
@@ -412,27 +425,68 @@
           <Property Type="Boolean" Name="IsDeleted" Nullable="true" />
           <Property Type="String" Name="Message" Nullable="false" MaxLength="13" />
         </ComplexType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="PK_CategoryId" />
+          </Key>
+          <Property Name="PK_CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MasterId" Type="Int32" />
+          <Property Name="CategoryDetail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Categories1" Relationship="Ecommerce_Web_DBModel.FK__Categorie__Maste__66603565" FromRole="Category" ToRole="Category1" />
+          <NavigationProperty Name="Category1" Relationship="Ecommerce_Web_DBModel.FK__Categorie__Maste__66603565" FromRole="Category1" ToRole="Category" />
+          <NavigationProperty Name="Categories11" Relationship="Ecommerce_Web_DBModel.FK__Categorie__Maste__6754599E" FromRole="Category" ToRole="Category1" />
+          <NavigationProperty Name="Category2" Relationship="Ecommerce_Web_DBModel.FK__Categorie__Maste__6754599E" FromRole="Category1" ToRole="Category" />
+          <NavigationProperty Name="Products" Relationship="Ecommerce_Web_DBModel.FK__Product__FK_Cate__6D0D32F4" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK__Categorie__Maste__66603565">
+          <End Type="Ecommerce_Web_DBModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="Ecommerce_Web_DBModel.Category" Role="Category1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="PK_CategoryId" />
+            </Principal>
+            <Dependent Role="Category1">
+              <PropertyRef Name="MasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Categorie__Maste__6754599E">
+          <End Type="Ecommerce_Web_DBModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="Ecommerce_Web_DBModel.Category" Role="Category1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="PK_CategoryId" />
+            </Principal>
+            <Dependent Role="Category1">
+              <PropertyRef Name="MasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__FK_Cate__6D0D32F4">
+          <End Type="Ecommerce_Web_DBModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="Ecommerce_Web_DBModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="PK_CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="FK_CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Ecommerce_Web_DBModelStoreContainer" CdmEntityContainer="Ecommerce_Web_DBEntities">
-          <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="Ecommerce_Web_DBModel.Category">
-              <MappingFragment StoreEntitySet="Categories">
-                <ScalarProperty Name="PK_CategoryId" ColumnName="PK_CategoryId" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="CategoryDetail" ColumnName="CategoryDetail" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="Ecommerce_Web_DBModel.Order">
               <MappingFragment StoreEntitySet="Order">
@@ -563,6 +617,22 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_SignUp" FunctionName="Ecommerce_Web_DBModel.Store.SP_SignUp" />
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="Ecommerce_Web_DBModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CategoryDetail" ColumnName="CategoryDetail" />
+                <ScalarProperty Name="MasterId" ColumnName="MasterId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="PK_CategoryId" ColumnName="PK_CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

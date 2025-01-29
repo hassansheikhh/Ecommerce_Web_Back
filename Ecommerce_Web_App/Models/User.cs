@@ -52,6 +52,7 @@ namespace Ecommerce_Web_API.Models
                 model = db.SP_Login(model.UserName, CommonUser.GetMd5Hash(model.Password, model.UserName))
                 .Select(x => new UserViewModel
                 {
+                    UserId = x.PK_UserId,
                     UserName = x.UserName,
                     FullName = x.FullName,
                     Email = x.Email,

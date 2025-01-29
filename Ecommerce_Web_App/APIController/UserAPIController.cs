@@ -32,8 +32,8 @@ namespace Ecommerce_Web_API.APIController
                     resp = new
                     {
                         Status = HttpStatusCode.OK,
-                        Message = model.ResponseMessage,
-                        Data = model.UserId,
+                        Message = "SignUp Successfully Go To The Login Page",
+                      
                     };
                 }
                 else
@@ -52,6 +52,8 @@ namespace Ecommerce_Web_API.APIController
                 {
                     Status = HttpStatusCode.InternalServerError,
                     Message = ex.Message.ToString(),
+                    ExceptionMessage = ex.InnerException,
+
                 };
             }
 
