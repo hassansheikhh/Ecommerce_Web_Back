@@ -20,12 +20,12 @@ namespace Ecommerce_Web_App.APIController
         public async Task<JsonResult<object>> GetAllCategories()
         {
             object resp;
-            ProductViewModel model = new ProductViewModel();
+            List<ProductViewModel> model = new List<ProductViewModel>();
 
             try
             {
                 var task = await Task.Run(() => model = new Models.Product().GetAllCategories());
-                if (model.IsSuccess)
+                if (model!=null)
                 {
                     resp = new
                     {
@@ -39,7 +39,7 @@ namespace Ecommerce_Web_App.APIController
                     resp = new
                     {
                         Status = HttpStatusCode.NoContent,
-                        Message = model.ResponseMessage,
+                        Message = "No categories found",
                     };
                 }
             }
@@ -92,6 +92,6 @@ namespace Ecommerce_Web_App.APIController
         //    return Json(resp);
         //}
 
-       
+
     }
 }

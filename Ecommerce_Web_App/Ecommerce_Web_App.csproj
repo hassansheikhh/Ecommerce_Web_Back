@@ -163,6 +163,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIController\ProductAPIController.cs" />
     <Compile Include="APIController\UserAPIController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -213,8 +214,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\ProductViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

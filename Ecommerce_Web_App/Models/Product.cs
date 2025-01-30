@@ -11,14 +11,15 @@ namespace Ecommerce_Web_App.Models
     {
         public Ecommerce_Web_DBEntities db = new Ecommerce_Web_DBEntities();
 
-        public ProductViewModel GetAllCategories()
+        public List<ProductViewModel> GetAllCategories()
         {
-            ProductViewModel model = new ProductViewModel();
+            List<ProductViewModel> model = new List<ProductViewModel>();
+
             try
             {
-                var categories = db.Categories
+                model = db.Categories
                     .Where(x => x.MasterId == null)
-                    .AsEnumerable()  // Fetches data into memory before processing
+                    .AsEnumerable()
                     .Select(x => new ProductViewModel
                     {
                         PkCategoryId = x.PK_CategoryId,
@@ -26,28 +27,25 @@ namespace Ecommerce_Web_App.Models
                         CategoryName = x.CategoryName,
                         SubCategories = db.Categories
                             .Where(sub => sub.MasterId == x.PK_CategoryId)
-                            .AsEnumerable() // Fetches data into memory
+                            .AsEnumerable()
                             .Select(sub => new ProductViewModel
                             {
                                 PkCategoryId = sub.PK_CategoryId,
                                 CategoryName = sub.CategoryName,
-                            }).ToList()
+                                CategoryDetail = sub.CategoryDetail,
+                            }).ToList() ?? new List<ProductViewModel>() 
                     }).ToList();
-
-                model = categories.FirstOrDefault();
-                model.IsSuccess = true;
             }
             catch (Exception ex)
             {
-                model.ResponseMessage = ex.Message;
+                model = new List<ProductViewModel>
+        {
+            new ProductViewModel { ResponseMessage = ex.Message }
+        };
             }
+
             return model;
         }
-
-
-
-
-
 
         //public ProductViewModel AddProduct(ProductViewModel model)
         //{
@@ -65,3 +63,4 @@ namespace Ecommerce_Web_App.Models
         //}
     }
 }
+
