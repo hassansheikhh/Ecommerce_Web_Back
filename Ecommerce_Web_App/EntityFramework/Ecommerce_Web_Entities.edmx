@@ -75,6 +75,7 @@
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="100" />
           <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -185,6 +186,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SP_AddProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PRODUCTNAME" Type="varchar" Mode="In" />
+          <Parameter Name="ARTICALNO" Type="nvarchar" Mode="In" />
+          <Parameter Name="PRODUCTCOLOR" Type="varchar" Mode="In" />
+          <Parameter Name="FK_CATEGORY_ID" Type="int" Mode="In" />
+          <Parameter Name="PRODUCTDETAIL" Type="varchar(max)" Mode="In" />
+          <Parameter Name="PRODUCTSIZE" Type="varchar" Mode="In" />
+          <Parameter Name="BUYINGPRICE" Type="int" Mode="In" />
+          <Parameter Name="SELLINGPRICE" Type="int" Mode="In" />
+          <Parameter Name="CREATEDBY" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="USERNAME" Type="varchar" Mode="In" />
           <Parameter Name="PASSWORD" Type="varchar" Mode="In" />
@@ -292,6 +304,7 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Category" Relationship="Ecommerce_Web_DBModel.FK__Product__FK_Cate__6D0D32F4" FromRole="Product" ToRole="Category" />
+          <Property Name="ContentType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -410,6 +423,17 @@
             <End Role="Category" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <FunctionImport Name="SP_AddProduct">
+            <Parameter Name="PRODUCTNAME" Mode="In" Type="String" />
+            <Parameter Name="ARTICALNO" Mode="In" Type="String" />
+            <Parameter Name="PRODUCTCOLOR" Mode="In" Type="String" />
+            <Parameter Name="FK_CATEGORY_ID" Mode="In" Type="Int32" />
+            <Parameter Name="PRODUCTDETAIL" Mode="In" Type="String" />
+            <Parameter Name="PRODUCTSIZE" Mode="In" Type="String" />
+            <Parameter Name="BUYINGPRICE" Mode="In" Type="Int32" />
+            <Parameter Name="SELLINGPRICE" Mode="In" Type="Int32" />
+            <Parameter Name="CREATEDBY" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_Login_Result">
           <Property Type="Int32" Name="PK_UserId" Nullable="false" />
@@ -527,6 +551,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="Ecommerce_Web_DBModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
                 <ScalarProperty Name="PK_ProductId" ColumnName="PK_ProductId" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ArticalNo" ColumnName="ArticalNo" />
@@ -633,6 +658,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_AddProduct" FunctionName="Ecommerce_Web_DBModel.Store.SP_AddProduct" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

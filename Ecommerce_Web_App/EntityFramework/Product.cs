@@ -30,6 +30,7 @@ namespace Ecommerce_Web_App.EntityFramework
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public string ContentType { get; set; }
     
         public virtual Category Category { get; set; }
     }

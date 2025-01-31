@@ -88,5 +88,46 @@ namespace Ecommerce_Web_App.EntityFramework
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_SignUp", usernameParameter, fullnameParameter, emailParameter, passwordParameter, addressParameter, postalcodeParameter, stateParameter, cityParameter, phone_noParameter);
         }
+    
+        public virtual int SP_AddProduct(string pRODUCTNAME, string aRTICALNO, string pRODUCTCOLOR, Nullable<int> fK_CATEGORY_ID, string pRODUCTDETAIL, string pRODUCTSIZE, Nullable<int> bUYINGPRICE, Nullable<int> sELLINGPRICE, Nullable<int> cREATEDBY)
+        {
+            var pRODUCTNAMEParameter = pRODUCTNAME != null ?
+                new ObjectParameter("PRODUCTNAME", pRODUCTNAME) :
+                new ObjectParameter("PRODUCTNAME", typeof(string));
+    
+            var aRTICALNOParameter = aRTICALNO != null ?
+                new ObjectParameter("ARTICALNO", aRTICALNO) :
+                new ObjectParameter("ARTICALNO", typeof(string));
+    
+            var pRODUCTCOLORParameter = pRODUCTCOLOR != null ?
+                new ObjectParameter("PRODUCTCOLOR", pRODUCTCOLOR) :
+                new ObjectParameter("PRODUCTCOLOR", typeof(string));
+    
+            var fK_CATEGORY_IDParameter = fK_CATEGORY_ID.HasValue ?
+                new ObjectParameter("FK_CATEGORY_ID", fK_CATEGORY_ID) :
+                new ObjectParameter("FK_CATEGORY_ID", typeof(int));
+    
+            var pRODUCTDETAILParameter = pRODUCTDETAIL != null ?
+                new ObjectParameter("PRODUCTDETAIL", pRODUCTDETAIL) :
+                new ObjectParameter("PRODUCTDETAIL", typeof(string));
+    
+            var pRODUCTSIZEParameter = pRODUCTSIZE != null ?
+                new ObjectParameter("PRODUCTSIZE", pRODUCTSIZE) :
+                new ObjectParameter("PRODUCTSIZE", typeof(string));
+    
+            var bUYINGPRICEParameter = bUYINGPRICE.HasValue ?
+                new ObjectParameter("BUYINGPRICE", bUYINGPRICE) :
+                new ObjectParameter("BUYINGPRICE", typeof(int));
+    
+            var sELLINGPRICEParameter = sELLINGPRICE.HasValue ?
+                new ObjectParameter("SELLINGPRICE", sELLINGPRICE) :
+                new ObjectParameter("SELLINGPRICE", typeof(int));
+    
+            var cREATEDBYParameter = cREATEDBY.HasValue ?
+                new ObjectParameter("CREATEDBY", cREATEDBY) :
+                new ObjectParameter("CREATEDBY", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AddProduct", pRODUCTNAMEParameter, aRTICALNOParameter, pRODUCTCOLORParameter, fK_CATEGORY_IDParameter, pRODUCTDETAILParameter, pRODUCTSIZEParameter, bUYINGPRICEParameter, sELLINGPRICEParameter, cREATEDBYParameter);
+        }
     }
 }
